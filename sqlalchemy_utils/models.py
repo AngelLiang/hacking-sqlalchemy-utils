@@ -1,3 +1,4 @@
+# coding=utf-8
 from datetime import datetime
 
 import sqlalchemy as sa
@@ -39,6 +40,10 @@ NOT_LOADED_REPR = '<not loaded>'
 
 
 def _generic_repr_method(self, fields):
+    """
+    :param self:
+    :param fields:
+    """
     state = sa.inspect(self)
     field_reprs = []
     if not fields:
@@ -85,6 +90,7 @@ def generic_repr(*fields):
         assert repr(foo) == 'MyModel(id=1, name='Foo', category=<not loaded>)'
     """
     if len(fields) == 1 and callable(fields[0]):
+        # 只传入了一个参数，且该参数是模型
         target = fields[0]
         target.__repr__ = lambda self: _generic_repr_method(self, fields=None)
         return target

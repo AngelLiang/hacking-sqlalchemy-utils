@@ -10,8 +10,9 @@ class QuerySorterException(Exception):
 
 
 class QuerySorter(object):
+    """查询排序器"""
     def __init__(self, silent=True, separator='-'):
-        self.separator = separator
+        self.separator = separator  # 分隔符
         self.silent = silent
 
     def assign_order_by(self, entity, attr, func):

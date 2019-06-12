@@ -178,4 +178,5 @@ class GenericRelationshipProperty(MapperProperty):
 
 
 def generic_relationship(*args, **kwargs):
+    """通用关系函数"""
     return GenericRelationshipProperty(*args, **kwargs)
