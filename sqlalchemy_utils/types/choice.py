@@ -151,8 +151,10 @@ class ChoiceType(types.TypeDecorator, ScalarCoercible):
             isinstance(choices, type) and
             issubclass(choices, Enum)
         ):
+            # 如果入参 choices 是 Enum
             self.type_impl = EnumTypeImpl(enum_class=choices)
         else:
+            # type_impl 是组合方式
             self.type_impl = ChoiceTypeImpl(choices=choices)
 
         if impl:
@@ -163,6 +165,7 @@ class ChoiceType(types.TypeDecorator, ScalarCoercible):
         return self.impl.python_type
 
     def _coerce(self, value):
+        """强制"""
         return self.type_impl._coerce(value)
 
     def process_bind_param(self, value, dialect):
@@ -180,7 +183,7 @@ class ChoiceTypeImpl(object):
             raise ImproperlyConfigured(
                 'ChoiceType needs list of choices defined.'
             )
-        self.choices_dict = dict(choices)
+        self.choices_dict = dict(choices)  # 转换为字典
 
     def _coerce(self, value):
         if value is None:
